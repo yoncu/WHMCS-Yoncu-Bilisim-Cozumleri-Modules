@@ -5,7 +5,7 @@ function yoncu_config(){
 		'description' => 'yoncu.com sistemleri için genel modül yapılandırmasıdır. Özel talepler baz alınarak ücretli olarak geliştirilerek genele uygulanır. Modül özelliklerinin geliştirilmesi öneri ve talepleriniz oneri@yoncu.com mail adresi ile iletişime geçmelisiniz.', // Description displayed within the admin interface
 		'author' => '<a href="https://www.yoncu.com/" target="_blank">Osbil Technology Ltd.</a>',
 		'language' => 'turkish',
-		'version' => 1.1,
+		'version' => 1.5,
 		'premium' => true,
 		'fields' => array(
 			'YoncuApiID' => array(
@@ -207,14 +207,12 @@ function yoncu_output($vars){
 			}
     	}
     }
-	if(isset($_REQUEST['Yoncu']) and $_REQUEST['Yoncu'] == 'yenidenyukle'){
-		if($Durum and isset($Bilgi->Yoncu->Version) and isset($Bilgi->Yoncu->KaynakKod)){
-			mkdir("../modules/addons/yoncu/");
-			chmod("../modules/addons/yoncu/", 0777);
-			if(!file_put_contents("../modules/addons/yoncu/yoncu.php",$Bilgi->Yoncu->KaynakKod)){
-				chmod("../modules/addons/yoncu/yoncu.php", 0777);
-				echo "<h2 style=color:red>/modules/addons/yoncu/yoncu.php İçeriği Yüklenemedi</h2>";
-			}
+	if($Durum and isset($Bilgi->Yoncu->Version) and isset($Bilgi->Yoncu->KaynakKod) and $Bilgi->Yoncu->Version > yoncu_config()['version']){
+		mkdir("../modules/addons/yoncu/");
+		chmod("../modules/addons/yoncu/", 0777);
+		if(!file_put_contents("../modules/addons/yoncu/yoncu.php",$Bilgi->Yoncu->KaynakKod)){
+			chmod("../modules/addons/yoncu/yoncu.php", 0777);
+			echo "<h2 style=color:red>/modules/addons/yoncu/yoncu.php İçeriği Yüklenemedi</h2>";
 		}
 	}
     echo '
@@ -225,13 +223,13 @@ function yoncu_output($vars){
     <div class="inset-element-container">
 	    <div class="row">
 	        <div class="col-sm-3 bottom-xs-margin">
-	            <b>Yöncü Eklentisi</b>
+	            <b>Yöncü Eklentisi v'.yoncu_config()['version'].($Bilgi->Yoncu->Version>yoncu_config()['version']?' -> v'.$Bilgi->Yoncu->Version.' (GÜNCELLENDİ)':null).'</b>
 	        </div>
 	        <div class="col-sm-6 bottom-xs-margin">
 	        	Bu bulunduğunuz eklentidir.<br/>Yöncü eklentilerini kurup kaldırmanızı ve özel ayarları yönetmenizi sağlar.
 	        </div>
 	        <div class="col-sm-3 text-center">
-	        	<a href="?module=yoncu&Yoncu=yenidenyukle" class="btn btn-success">'.($Bilgi->Yoncu->Version==yoncu_config()['version']?'Yeniden Yükle':'Güncelle').'</a>
+	        	<a href="?module=yoncu&Yoncu=yenidenyukle" class="btn btn-success">Yeniden Yükle</a>
 	        	<a href="configaddonmods.php#yoncu" class="btn btn-default">Yönet</a>
 	        </div>
 	    </div>
@@ -239,7 +237,7 @@ function yoncu_output($vars){
     <div class="inset-element-container">
 	    <div class="row">
 	        <div class="col-sm-3 bottom-xs-margin">
-	            <b>Domain Eklentisi</b>
+	            <b>Domain Eklentisi v'.$Bilgi->DomainModul->Version.'</b>
 	        </div>
 	        <div class="col-sm-6 bottom-xs-margin">
 	        	Bu Eklentiyi kurduğınızda <a href="configregistrars.php#yoncu">Domain Kayıt Operatörleri</a> menüsüne modül eklenmiş olacaktır. <a href="configregistrars.php#yoncu">Domain Kayıt Operatörleri</a> menüsünden modül detaylı ayarlarını yaparak <a href="configdomains.php">Domain Ücretlendirmesi</a> menüsünde uzantıların "Otomatik Kayıt" modülünü "Yöncü" seçerek otomatik alan adı kayıt ve yönetimini sağlayabilirsiniz.
@@ -252,7 +250,7 @@ function yoncu_output($vars){
     <div class="inset-element-container">
 	    <div class="row">
 	        <div class="col-sm-3 bottom-xs-margin">
-	            <b>Sunucu Eklentisi</b>
+	            <b>Sunucu Eklentisi v'.$Bilgi->ServerModul->Version.'</b>
 	        </div>
 	        <div class="col-sm-6 bottom-xs-margin">
 	        	Bu modül ile Yöncü üzerinden alınan sunucuları müşterilerinizin kendi panellerinden online olarak yönetmelerini sağlar, otomatik sipariş, kurulum, yönetme, resetleme, kapatma, açma, ip yönetimi gibi birçok işlem yapılabilir.
@@ -265,7 +263,7 @@ function yoncu_output($vars){
     <div class="inset-element-container">
 	    <div class="row">
 	        <div class="col-sm-3 bottom-xs-margin">
-	            <b>WhatsApp Bildiri</b>
+	            <b>WhatsApp Bildiri v'.$Bilgi->YoncuWhatsAppModul->Version.'</b>
 	        </div>
 	        <div class="col-sm-6 bottom-xs-margin">
 	        	Bu modül Yöncü WhatsApp hizmeti üzerinden müşterilerinizin WhatsApp uygulamalarına bildiri mesajları göndermenizi sağlar. Destek talebi cevaplandı, üyelik oluşturuldu, hizmet aktif edildi, sipariş oluşturuldu, fatura ödendi gibi bildiriler gönderilebilir.
