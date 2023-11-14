@@ -122,7 +122,7 @@ function yoncu_deactivate(){
     yoncu_logModuleCall('deactivate',$_REQUEST,$query);
     return array(
         'status' => 'success',
-        'description' => 'Modül kaldırıldı ve modül ayarları silindi. Artık eklentiler menüüsnde bu modül yer almayacaktır.',
+        'description' => 'Modül kaldırıldı ve modül ayarları silindi. Artık eklentiler menüsünde bu modül yer almayacaktır.',
     );
 }
 function yoncu_upgrade($vars){
@@ -218,7 +218,7 @@ function yoncu_output($vars){
     echo '
 <img src="//www.yoncu.com/resimler/genel/logo.png"/>
 <hr/>
-<p>Bu eklenti Yöncü sistemlerini sitenize entegre etmek için altyapıyı kurar ve eklentileri takip, yükleme, kaldırma, güncelleme, ayarlama için size yardımcı olur.</p>
+<p>Bu eklenti Yöncü sistemlerini sitenize entegre etmek için altyapıyı kurar ve eklentileri takip, yükleme, kaldırma, güncelleme(otomatik), ayarlama için size yardımcı olur.</p>
 <div class="inset-grey-bg">
     <div class="inset-element-container">
 	    <div class="row">
