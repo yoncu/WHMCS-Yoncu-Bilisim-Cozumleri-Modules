@@ -82,7 +82,7 @@ function yoncu_curl($Hizmet,$Islem,$params,$PostVeri=array(),$Deneme=0){
 		return array(false,'Token Alınamadı');
 	}
 	curl_setopt($ch, CURLOPT_URL,$URL);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, ['Cookie: YoncuKoruma='.$_SERVER['SERVER_ADDR'].';YoncuKorumaRisk=0;YoncuSec-v1='.$Token]);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, ['Cookie: YoncuKoruma='.$_SERVER['SERVER_ADDR'].';YoncuKorumaRisk=0;YoncuSec='.$Token]);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($PostVeri));
 	$Json = curl_exec($ch);
 	$HttpStatus	= curl_getinfo($ch, CURLINFO_HTTP_CODE);
